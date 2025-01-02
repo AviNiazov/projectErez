@@ -7,7 +7,6 @@ from flask_cors import CORS
 load_dotenv()
 
 app = Flask(__name__)
-
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 jwt = JWTManager(app)
 
@@ -35,14 +34,10 @@ def login():
 @jwt_required()
 def calculate():
     current_user = get_jwt_identity() 
-    
     number = request.json.get("number", None)
-    
     if number is None or not isinstance(number, (int, float)):
         return jsonify({"msg": "Invalid number"}), 400
-    
     result = number * 2
-    
     return jsonify({
         "username": current_user["username"],   
         "original_number": number,             
