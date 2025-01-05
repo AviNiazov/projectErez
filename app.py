@@ -39,7 +39,7 @@ def decode_access_token(token):
         print("Invalid token error:", e)  # Debugging
         return {"msg": "Invalid token"}
 
-@app.route("/")
+@app.route("/") # home page
 def home():
     print("Home route accessed")  # Debugging
     return "Welcome to the Flask App!"
