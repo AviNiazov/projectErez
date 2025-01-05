@@ -7,6 +7,7 @@ from flask_cors import CORS
 
 load_dotenv()
 
+
 app = Flask(__name__)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
@@ -114,4 +115,4 @@ def calculate():
 
 if __name__ == "__main__":
     print("Starting the Flask app...")  # Debugging
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000, ssl_context=("cert.pem", "key.pem"))
