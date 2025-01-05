@@ -3,13 +3,23 @@ import jwt
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
+<<<<<<< HEAD
 from flask_cors import CORS
+=======
+from flask_cors import CORS 
+>>>>>>> 7d9510d8444284583821a673d1cc726e82cd2108
 
 load_dotenv()
 
 app = Flask(__name__)
+<<<<<<< HEAD
 
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+=======
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+jwt = JWTManager(app)
+
+>>>>>>> 7d9510d8444284583821a673d1cc726e82cd2108
 CORS(app)
 
 def create_access_token(identity):
@@ -46,6 +56,7 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
+<<<<<<< HEAD
     print("Login route accessed")  # Debugging
     admin_username = os.getenv('ADMIN_USERNAME')
     admin_password = os.getenv('ADMIN_PASSWORD')
@@ -59,6 +70,13 @@ def login():
 
     username = body.get("username", None)
     password = body.get("password", None)
+=======
+    admin_username = os.getenv('ADMIN_USERNAME')
+    admin_password = os.getenv('ADMIN_PASSWORD')
+
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+>>>>>>> 7d9510d8444284583821a673d1cc726e82cd2108
 
     if username == admin_username and password == admin_password:
         try:
@@ -74,6 +92,7 @@ def login():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
+<<<<<<< HEAD
     print("Calculate route accessed")  # Debugging
     auth_header = request.headers.get('Authorization', None)
 
@@ -99,9 +118,14 @@ def calculate():
 
     number = body.get("number", None)
 
+=======
+    current_user = get_jwt_identity() 
+    number = request.json.get("number", None)
+>>>>>>> 7d9510d8444284583821a673d1cc726e82cd2108
     if number is None or not isinstance(number, (int, float)):
         print("Invalid number received:", number)  # Debugging
         return jsonify({"msg": "Invalid number"}), 400
+<<<<<<< HEAD
 
     result = number * 2
     print("Calculation successful:", {"original_number": number, "result": result})  # Debugging
@@ -114,4 +138,14 @@ def calculate():
 
 if __name__ == "__main__":
     print("Starting the Flask app...")  # Debugging
+=======
+    result = number * 2
+    return jsonify({
+        "username": current_user["username"],   
+        "original_number": number,             
+        "calculated_result": result            
+    }), 200
+
+if __name__ == "__main__":
+>>>>>>> 7d9510d8444284583821a673d1cc726e82cd2108
     app.run(port=5000)
